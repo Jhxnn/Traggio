@@ -3,6 +3,9 @@ package com.traggio.models;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.traggio.models.enums.MeioPagamento;
+import com.traggio.models.enums.StatusPagamento;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,10 +31,35 @@ public class Pagamento {
 	private LocalDate dataPagamento;
 	
 	private double valor;
+	
+	private MeioPagamento meioPagamento;
+	
+	private StatusPagamento status;
 
 	public UUID getPagamentoId() {
 		return pagamentoId;
 	}
+	
+
+	public MeioPagamento getMeioPagamento() {
+		return meioPagamento;
+	}
+
+
+	public void setMeioPagamento(MeioPagamento meioPagamento) {
+		this.meioPagamento = meioPagamento;
+	}
+
+
+	public StatusPagamento getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(StatusPagamento status) {
+		this.status = status;
+	}
+
 
 	public void setPagamentoId(UUID pagamentoId) {
 		this.pagamentoId = pagamentoId;
@@ -60,10 +88,6 @@ public class Pagamento {
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
-	
-//	private MeioPagamento meioPagamento;
-	
-//	private StatusPagamento status;
 	
 	
 	

@@ -3,6 +3,8 @@ package com.traggio.models;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.traggio.models.enums.StatusPedido;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ public class Pedido {
 	
 	private LocalDate dataPedido;
 	
-//	private StatusPedido status;
+	private StatusPedido status;
 	
 	private double totalTaxa;
 	
@@ -42,6 +44,14 @@ public class Pedido {
 
 	public void setPedidoId(UUID pedidoId) {
 		this.pedidoId = pedidoId;
+	}
+
+	public StatusPedido getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusPedido status) {
+		this.status = status;
 	}
 
 	public Cliente getCliente() {

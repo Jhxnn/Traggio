@@ -3,6 +3,9 @@ package com.traggio.models;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.traggio.models.enums.StatusDocumento;
+import com.traggio.models.enums.TipoDocumento;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,13 +33,34 @@ public class Documentacao {
 	
 	private LocalDate dataRecebimento;
 	
-//	private TipoDocumento tipo;
+	private TipoDocumento tipo;
 	
-//	private StatusDocumento status;
+	private StatusDocumento status;
 
 	public UUID getDocumentacaoId() {
 		return documentacaoId;
 	}
+	
+
+	public TipoDocumento getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(TipoDocumento tipo) {
+		this.tipo = tipo;
+	}
+
+
+	public StatusDocumento getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(StatusDocumento status) {
+		this.status = status;
+	}
+
 
 	public void setDocumentacaoId(UUID documentacaoId) {
 		this.documentacaoId = documentacaoId;

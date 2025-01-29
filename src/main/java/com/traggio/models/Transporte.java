@@ -2,6 +2,8 @@ package com.traggio.models;
 
 import java.time.LocalDate;
 
+import com.traggio.models.enums.StatusTransporte;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -31,6 +33,17 @@ public class Transporte {
    private LocalDate dataPrevisaoChegada;
    
    private LocalDate dataChegada;
+
+   private StatusTransporte status;
+   
+   
+public StatusTransporte getStatus() {
+	return status;
+}
+
+public void setStatus(StatusTransporte status) {
+	this.status = status;
+}
 
 public Veiculo getVeiculo() {
 	return veiculo;
@@ -88,7 +101,6 @@ public void setDataChegada(LocalDate dataChegada) {
 	this.dataChegada = dataChegada;
 }
    
-//   private StatusTransporte status;
    
    
    
