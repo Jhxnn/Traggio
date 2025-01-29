@@ -13,33 +13,28 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "documentacoes")
-public class Documentacao {
+@Table(name = "pagamentos")
+public class Pagamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private UUID documentacaoId;
-	
+	private UUID pagamentoId;
 	
 	@JoinColumn(referencedColumnName = "id", name = "pedidoId")
 	@ManyToOne
 	private Pedido pedido;
 	
-	private LocalDate dataEnvio;
+	private LocalDate dataPagamento;
 	
-	private LocalDate dataRecebimento;
-	
-//	private TipoDocumento tipo;
-	
-//	private StatusDocumento status;
+	private double valor;
 
-	public UUID getDocumentacaoId() {
-		return documentacaoId;
+	public UUID getPagamentoId() {
+		return pagamentoId;
 	}
 
-	public void setDocumentacaoId(UUID documentacaoId) {
-		this.documentacaoId = documentacaoId;
+	public void setPagamentoId(UUID pagamentoId) {
+		this.pagamentoId = pagamentoId;
 	}
 
 	public Pedido getPedido() {
@@ -50,23 +45,26 @@ public class Documentacao {
 		this.pedido = pedido;
 	}
 
-	public LocalDate getDataEnvio() {
-		return dataEnvio;
+	public LocalDate getDataPagamento() {
+		return dataPagamento;
 	}
 
-	public void setDataEnvio(LocalDate dataEnvio) {
-		this.dataEnvio = dataEnvio;
+	public void setDataPagamento(LocalDate dataPagamento) {
+		this.dataPagamento = dataPagamento;
 	}
 
-	public LocalDate getDataRecebimento() {
-		return dataRecebimento;
+	public double getValor() {
+		return valor;
 	}
 
-	public void setDataRecebimento(LocalDate dataRecebimento) {
-		this.dataRecebimento = dataRecebimento;
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 	
-
+//	private MeioPagamento meioPagamento;
+	
+//	private StatusPagamento status;
+	
 	
 	
 }
