@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.traggio.dtos.PedidoDto;
 import com.traggio.models.Pedido;
+import com.traggio.models.enums.StatusPedido;
 import com.traggio.services.PedidoService;
 
 @RestController
@@ -35,14 +36,28 @@ public class PedidoController {
 	public ResponseEntity<Pedido> findById(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findById(id));
 	}
+	@GetMapping("/cliente/{id}")
+	public ResponseEntity<List<Pedido>> findByCliente(@PathVariable(name = "id")UUID clienteId){
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findByCliente(clienteId));
+	}
 	@PostMapping
 	public ResponseEntity<Pedido> createPedido(@RequestBody PedidoDto pedidoDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.createPedido(pedidoDto));
+	}
+	@PutMapping("/{status}/{id}")
+	public ResponseEntity<Pedido> uptadeStatus(@PathVariable(name = "id")UUID id,
+			@PathVariable(name = "status")StatusPedido status){
+		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.uptadeStatus(status, id));
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Pedido> updatePedido(@RequestBody PedidoDto pedidoDto, @PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.uptadePedido(id, pedidoDto));
 	}
+	@PutMapping("/cancelar/{id}")
+	public ResponseEntity<Pedido> cancelPedido(@PathVariable(name = "id")UUID id){
+		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.cancelPedido(id));
+	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Pedido> deletePedido(@PathVariable(name = "id")UUID id){
 		pedidoService.deletePedido(id);

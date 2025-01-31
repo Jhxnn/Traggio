@@ -5,11 +5,13 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.traggio.dtos.PagamentoDto;
 import com.traggio.models.Pagamento;
 import com.traggio.repositories.PagamentoRepository;
 
+@Service
 public class PagamentoService {
 	
 	@Autowired

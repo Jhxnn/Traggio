@@ -5,11 +5,13 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.traggio.dtos.DespachanteDto;
 import com.traggio.models.Despachante;
 import com.traggio.repositories.DespachanteRepository;
 
+@Service
 public class DespachanteService {
 
 	

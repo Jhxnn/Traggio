@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.traggio.dtos.PedidoDto;
+import com.traggio.models.Cliente;
 import com.traggio.models.Pedido;
+import com.traggio.models.enums.StatusPedido;
 import com.traggio.repositories.PedidoRepository;
 
 
@@ -18,6 +20,9 @@ public class PedidoService {
 	@Autowired
 	PedidoRepository pedidoRepository;
 	
+	@Autowired
+	ClienteService clienteService;
+	
 	
 	
 	public Pedido findById(UUID id) {
@@ -26,6 +31,23 @@ public class PedidoService {
 	
 	public List<Pedido> findAll(){
 		return pedidoRepository.findAll();
+	}
+	
+	public List<Pedido> findByCliente(UUID clienteId){
+		Cliente cliente = clienteService.findById(clienteId);
+		return pedidoRepository.findByCliente(cliente);
+	}
+	
+	public Pedido uptadeStatus(StatusPedido status, UUID idPedido) {
+		Pedido pedido = findById(idPedido);
+		pedido.setStatus(status);
+		return pedidoRepository.save(pedido);
+	}
+	
+	public Pedido cancelPedido(UUID id) {
+		Pedido pedido = findById(id);
+		pedido.setStatus(StatusPedido.CANCELADO);
+		return pedidoRepository.save(pedido);
 	}
 	
 	public Pedido createPedido(PedidoDto pedidoDto) {
