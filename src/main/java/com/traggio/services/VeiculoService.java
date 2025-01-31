@@ -33,6 +33,18 @@ public class VeiculoService {
 		return veiculoRepository.save(veiculo);
 	}
 	
+	public List<Veiculo> findByPaisOrigem(String paisOrigem){
+		return veiculoRepository.findByPaisOrigem(paisOrigem);
+	}
+	
+	public List<Veiculo> findByModelo(String modelo){
+		return veiculoRepository.findByModelo(modelo);	
+	}
+	
+	public List<Veiculo> findByMarca(String marca){
+		return veiculoRepository.findByMarca(marca);
+	}
+	
 	public Veiculo uptadeVeiculo(UUID id, VeiculoDto veiculoDto) {
 		var veiculo =  findById(id);
 		BeanUtils.copyProperties(veiculoDto, veiculo);

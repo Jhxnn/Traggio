@@ -13,4 +13,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID>  {
 
 	
 	List<Pedido> findByCliente(Cliente cliente);
+	
+	List<Pedido> findAllByOrderByUpdatedAtDesc();
+	
+	List<Pedido> findAllByOrderByCreatedAtDesc();
 }

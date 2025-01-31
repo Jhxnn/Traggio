@@ -49,6 +49,13 @@ public class PedidoService {
 		pedido.setStatus(StatusPedido.CANCELADO);
 		return pedidoRepository.save(pedido);
 	}
+	public List<Pedido> updatedDesc(){
+		return pedidoRepository.findAllByOrderByUpdatedAtDesc();
+	}
+	
+	public List<Pedido> createdDesc(){
+		return pedidoRepository.findAllByOrderByCreatedAtDesc();
+	}
 	
 	public Pedido createPedido(PedidoDto pedidoDto) {
 		var pedido = new Pedido();

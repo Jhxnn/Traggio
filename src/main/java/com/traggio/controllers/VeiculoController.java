@@ -35,6 +35,18 @@ public class VeiculoController {
 	public ResponseEntity<Veiculo> findById(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(veiculoService.findById(id));
 	}
+	@GetMapping("/marca/{marca}")
+	public ResponseEntity<List<Veiculo>> findByMarca(@PathVariable(name = "marca")String marca){
+		return ResponseEntity.status(HttpStatus.OK).body(veiculoService.findByMarca(marca));
+	}
+	@GetMapping("/modelo/{modelo}")
+	public ResponseEntity<List<Veiculo>> findByModelo(@PathVariable(name = "modelo")String modelo){
+		return ResponseEntity.status(HttpStatus.OK).body(veiculoService.findByModelo(modelo));
+	}
+	@GetMapping("/pais/{paisOrigem}")
+	public ResponseEntity<List<Veiculo>> findByPaisOrigem(@PathVariable(name = "paisOrigem")String paisOrigem){
+		return ResponseEntity.status(HttpStatus.OK).body(veiculoService.findByPaisOrigem(paisOrigem));
+	}
 	@PostMapping
 	public ResponseEntity<Veiculo> createVeiculo(@RequestBody VeiculoDto veiculoDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(veiculoService.createVeiculo(veiculoDto));

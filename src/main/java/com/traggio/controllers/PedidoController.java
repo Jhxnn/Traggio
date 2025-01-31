@@ -40,6 +40,15 @@ public class PedidoController {
 	public ResponseEntity<List<Pedido>> findByCliente(@PathVariable(name = "id")UUID clienteId){
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findByCliente(clienteId));
 	}
+	
+	@GetMapping("/updated")
+	public ResponseEntity<List<Pedido>> updatedDesc(){
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.updatedDesc());
+	}
+	@GetMapping("/created")
+	public ResponseEntity<List<Pedido>> createdDesc(){
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.createdDesc());
+	}
 	@PostMapping
 	public ResponseEntity<Pedido> createPedido(@RequestBody PedidoDto pedidoDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.createPedido(pedidoDto));
@@ -49,6 +58,7 @@ public class PedidoController {
 			@PathVariable(name = "status")StatusPedido status){
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.uptadeStatus(status, id));
 	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<Pedido> updatePedido(@RequestBody PedidoDto pedidoDto, @PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.uptadePedido(id, pedidoDto));
