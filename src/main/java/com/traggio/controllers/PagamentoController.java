@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -72,6 +73,17 @@ public class PagamentoController {
 		return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.receitaDurantePeriodo(dataInicio, dataFim));
 	}
 	
+	@Operation(description = "Gera um relatorio em PDF com os pagamentos e a receita total")
+	@GetMapping("/pdf/{dataInico}/{dataFim}")
+	public ResponseEntity<byte[]> pdfPagamento(@PathVariable(name = "dataInicio")LocalDate dataInicio,
+			@PathVariable(name = "dataFim")LocalDate dataFim){
+		
+		byte[] pdfBytes = pagamentoService.pdfPagamento(dataInicio, dataFim);
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=relatorio.pdf");
+	    headers.add(HttpHeaders.CONTENT_TYPE, "application/pdf");
+	    return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+	}
 	
 	@Operation(description = "Cria um pagamento")
 	@PostMapping
