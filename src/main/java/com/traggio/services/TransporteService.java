@@ -34,6 +34,20 @@ public class TransporteService {
 		return transporteRepository.save(transporte);
 	}
 	
+	public String relatorioAtraso(UUID id) {
+		var transporte = findById(id);
+		if(transporte.getDataPrevisaoChegada().isBefore(transporte.getDataChegada())){
+			return "O transporte atrasou (gerar relatorio em pdf";
+		}
+		return "O Transporte nao atrasou (gerar relatorio em pdf";
+	}
+	
+	public List<Object[]> findMostUsedCars(){
+		return transporteRepository.findMostUsedVehicleModels();
+	}
+	
+	
+	
 	public Transporte uptadeTransporte(UUID id, TransporteDto transporteDto) {
 		var transporte =  findById(id);
 		BeanUtils.copyProperties(transporteDto, transporte);

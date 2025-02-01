@@ -1,6 +1,7 @@
 package com.traggio.dtos;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record VeiculoDto(
 		String marca, 
@@ -11,7 +12,8 @@ public record VeiculoDto(
 		int VIN,
 		String paisOrigem,
 		double precoBase,
-		double taxaImportacao
+		double taxaImportacao,
+		UUID fornecedorId
 		) {
 
 }

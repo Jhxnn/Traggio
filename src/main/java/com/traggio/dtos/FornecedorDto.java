@@ -4,8 +4,8 @@ public record FornecedorDto(
 		String nome, 
 		String contato,
 		String endereco, 
-		String pais, String 
-		email
+		String pais,
+		String email
 		
 		) {
 

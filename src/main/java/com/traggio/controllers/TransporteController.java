@@ -36,6 +36,14 @@ public class TransporteController {
 	public ResponseEntity<Transporte> findById(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(transporteService.findById(id));
 	}
+	@GetMapping("/atraso/{id}")
+	public ResponseEntity<String> relatorioAtraso(@PathVariable(name = "id")UUID id){
+		return ResponseEntity.status(HttpStatus.OK).body(transporteService.relatorioAtraso(id));
+	}
+	@GetMapping("/veiculos/mais-transportados")
+	public ResponseEntity<List<Object[]>> maisTransportados(){
+		return ResponseEntity.status(HttpStatus.OK).body(transporteService.findMostUsedCars());
+	}
 	@PostMapping
 	public ResponseEntity<Transporte> createTransporte(@RequestBody TransporteDto clienteDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(transporteService.createTransporte(clienteDto));

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.traggio.dtos.ClienteDto;
 import com.traggio.models.Cliente;
 import com.traggio.services.ClienteService;
+import com.traggio.services.PedidoService;
 
 @RestController
 @RequestMapping("/cliente")
@@ -26,6 +27,9 @@ public class ClienteController {
 	
 	@Autowired
 	ClienteService clienteService;
+	
+	@Autowired
+	PedidoService pedidoService;
 	
 	@GetMapping
 	public ResponseEntity<List<Cliente>> findAll(){
@@ -36,6 +40,12 @@ public class ClienteController {
 	public ResponseEntity<Cliente> findById(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(clienteService.findById(id));
 	}
+	
+	@GetMapping("/taxas/{id}")
+	public ResponseEntity<List<Double>> taxasPagas(@PathVariable(name = "id")UUID id){
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.taxasPagas(id));
+	}
+	
 	@PostMapping
 	public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDto clienteDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.createCliente(clienteDto));

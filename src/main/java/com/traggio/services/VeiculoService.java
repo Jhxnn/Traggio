@@ -17,7 +17,8 @@ public class VeiculoService {
 	@Autowired
 	VeiculoRepository veiculoRepository;
 	
-	
+	@Autowired
+	FornecedorService fornecedorService;
 	
 	public Veiculo findById(UUID id) {
 		return veiculoRepository.findById(id).orElseThrow(()-> new RuntimeException("Não foi possivel encontrar"));
@@ -29,7 +30,9 @@ public class VeiculoService {
 	
 	public Veiculo createVeiculo(VeiculoDto veiculoDto) {
 		var veiculo = new Veiculo();
+		var fornecedor = fornecedorService.findById(veiculoDto.fornecedorId());
 		BeanUtils.copyProperties(veiculoDto, veiculo);
+		veiculo.setFornecedor(fornecedor);
 		return veiculoRepository.save(veiculo);
 	}
 	
@@ -41,13 +44,20 @@ public class VeiculoService {
 		return veiculoRepository.findByModelo(modelo);	
 	}
 	
+	public List<Veiculo> findByFornecedor(UUID fornecedorId){
+		var fornecedor = fornecedorService.findById(fornecedorId);
+		return veiculoRepository.findByFornecedor(fornecedor);
+	}
+	
 	public List<Veiculo> findByMarca(String marca){
 		return veiculoRepository.findByMarca(marca);
 	}
 	
 	public Veiculo uptadeVeiculo(UUID id, VeiculoDto veiculoDto) {
 		var veiculo =  findById(id);
+		var fornecedor = fornecedorService.findById(veiculoDto.fornecedorId());
 		BeanUtils.copyProperties(veiculoDto, veiculo);
+		veiculo.setFornecedor(fornecedor);
 		return veiculoRepository.save(veiculo);
 	}
 	

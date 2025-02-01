@@ -59,6 +59,9 @@ public class Pedido {
 	public UUID getPedidoId() {
 		return pedidoId;
 	}
+	
+
+
 
 	public void setPedidoId(UUID pedidoId) {
 		this.pedidoId = pedidoId;

@@ -17,6 +17,10 @@ public class DocumentacaoService {
 	@Autowired
 	DocumentacaoRepository documentacaoRepository;
 	
+	@Autowired
+	PedidoService pedidoService;
+	
+	
 	
 	
 	public Documentacao findById(UUID id) {
@@ -29,13 +33,18 @@ public class DocumentacaoService {
 	
 	public Documentacao createDocumentacao(DocumentacaoDto documentacaoDto) {
 		var documentacao = new Documentacao();
+		var pedido = pedidoService.findById(documentacaoDto.pedidoId());
 		BeanUtils.copyProperties(documentacaoDto, documentacao);
+		documentacao.setPedido(pedido);
 		return documentacaoRepository.save(documentacao);
+
 	}
 	
 	public Documentacao uptadeDocumentacao(UUID id, DocumentacaoDto documentacaoDto) {
 		var documentacao =  findById(id);
+		var pedido = pedidoService.findById(documentacaoDto.pedidoId());
 		BeanUtils.copyProperties(documentacaoDto, documentacao);
+		documentacao.setPedido(pedido);
 		return documentacaoRepository.save(documentacao);
 	}
 	

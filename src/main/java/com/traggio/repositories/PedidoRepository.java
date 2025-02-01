@@ -1,12 +1,14 @@
 package com.traggio.repositories;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import com.traggio.models.Pedido;
-import java.util.List;
 import com.traggio.models.Cliente;
+import com.traggio.models.Pedido;
 
 
 public interface PedidoRepository extends JpaRepository<Pedido, UUID>  {
@@ -17,4 +19,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID>  {
 	List<Pedido> findAllByOrderByUpdatedAtDesc();
 	
 	List<Pedido> findAllByOrderByCreatedAtDesc();
+	
+	
+	@Query("SELECT p.totalTaxa FROM Pedido p WHERE p.cliente = :cliente")
+    List<Double> findTotalTaxaByClienteId(@Param("cliente") Cliente cliente);
 }

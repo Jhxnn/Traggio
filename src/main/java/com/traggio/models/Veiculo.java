@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,7 +23,11 @@ public class Veiculo {
 	
 	private String marca;
 	
-	private String Modelo;
+	private String modelo;
+	
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id",name = "fornecedorId")
+	private Fornecedor fornecedor;
 	
 	private LocalDate anoFabricacao;
 	
@@ -44,6 +50,15 @@ public class Veiculo {
 	public void setVeiculoId(UUID veiculoId) {
 		this.veiculoId = veiculoId;
 	}
+	
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
 
 	public String getMarca() {
 		return marca;
@@ -54,11 +69,11 @@ public class Veiculo {
 	}
 
 	public String getModelo() {
-		return Modelo;
+		return modelo;
 	}
 
 	public void setModelo(String modelo) {
-		Modelo = modelo;
+		this.modelo = modelo;
 	}
 
 	public LocalDate getAnoFabricacao() {

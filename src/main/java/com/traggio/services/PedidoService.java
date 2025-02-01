@@ -44,6 +44,11 @@ public class PedidoService {
 		return pedidoRepository.save(pedido);
 	}
 	
+	public List<Double> taxasPagas(UUID clienteId) {
+		var cliente = clienteService.findById(clienteId);
+		return pedidoRepository.findTotalTaxaByClienteId(cliente);
+	}
+	
 	public Pedido cancelPedido(UUID id) {
 		Pedido pedido = findById(id);
 		pedido.setStatus(StatusPedido.CANCELADO);
