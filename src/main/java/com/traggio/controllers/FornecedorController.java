@@ -19,6 +19,8 @@ import com.traggio.dtos.FornecedorDto;
 import com.traggio.models.Fornecedor;
 import com.traggio.services.FornecedorService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping("/fornecedor")
@@ -27,23 +29,32 @@ public class FornecedorController {
 	@Autowired
 	FornecedorService fornecedorService;
 	
+	
+	@Operation(description = "Lista todos os fornecedores")
 	@GetMapping
 	public ResponseEntity<List<Fornecedor>> findAll(){
 		return ResponseEntity.status(HttpStatus.OK).body(fornecedorService.findAll());
 	}
 	
+	@Operation(description = "Busca fornecedor por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Fornecedor> findById(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(fornecedorService.findById(id));
 	}
+	
+	@Operation(description = "Cria um fornecedor")
 	@PostMapping
 	public ResponseEntity<Fornecedor> createFornecedor(@RequestBody FornecedorDto fornecedorDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(fornecedorService.createFornecedor(fornecedorDto));
 	}
+	
+	@Operation(description = "Atualiza um fornecedor")
 	@PutMapping("/{id}")
 	public ResponseEntity<Fornecedor> updateFornecedor(@RequestBody FornecedorDto fornecedorDto, @PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(fornecedorService.uptadeFornecedor(id, fornecedorDto));
 	}
+	
+	@Operation(description = "Deleta um fornecedor")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Fornecedor> deleteFornecedor(@PathVariable(name = "id")UUID id){
 		fornecedorService.deleteFornecedor(id);

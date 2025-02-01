@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.traggio.models.Cliente;
 import com.traggio.models.Pedido;
+import com.traggio.models.enums.StatusPedido;
 
 
 public interface PedidoRepository extends JpaRepository<Pedido, UUID>  {
@@ -23,4 +24,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID>  {
 	
 	@Query("SELECT p.totalTaxa FROM Pedido p WHERE p.cliente = :cliente")
     List<Double> findTotalTaxaByClienteId(@Param("cliente") Cliente cliente);
+	
+	
+	List<Pedido> findByStatus(StatusPedido status);
 }

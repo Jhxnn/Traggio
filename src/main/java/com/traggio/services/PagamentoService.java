@@ -1,5 +1,6 @@
 package com.traggio.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.traggio.dtos.PagamentoDto;
 import com.traggio.models.Pagamento;
+import com.traggio.models.enums.MeioPagamento;
+import com.traggio.models.enums.StatusPagamento;
 import com.traggio.repositories.PagamentoRepository;
 
 @Service
@@ -32,6 +35,28 @@ public class PagamentoService {
 		BeanUtils.copyProperties(pagamentoDto, pagamento);
 		return pagamentoRepository.save(pagamento);
 	}
+	
+	public List<Pagamento> findByMeioPagamento(MeioPagamento meio){
+		return pagamentoRepository.findByMeioPagamento(meio);
+	}
+	
+	public List<Pagamento> findByStatus(StatusPagamento status){
+		return pagamentoRepository.findByStatus(status);
+	}
+	
+	public List<Pagamento> findByData(LocalDate dataInicio, LocalDate dataFim){
+		return pagamentoRepository.findAllByDataPagamentoBetween(dataInicio, dataFim);
+	}
+	
+	public Double receitaDurantePeriodo(LocalDate dataInicio, LocalDate dataFim){
+		List<Pagamento> pagamentos = findByData(dataInicio, dataFim);
+		double total = 0;
+		for(Pagamento pagamento: pagamentos) {
+			total += pagamento.getValor();
+		}
+		return total;
+	}
+	
 	
 	public Pagamento uptadePagamento(UUID id, PagamentoDto pagamentoDto) {
 		var pagamento =  findById(id);

@@ -19,6 +19,8 @@ import com.traggio.dtos.TransporteDto;
 import com.traggio.models.Transporte;
 import com.traggio.services.TransporteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/transporte")
 public class TransporteController {
@@ -27,31 +29,41 @@ public class TransporteController {
 	@Autowired
 	TransporteService transporteService;
 	
+	@Operation(description = "Lista todos os transportes")
 	@GetMapping
 	public ResponseEntity<List<Transporte>> findAll(){
 		return ResponseEntity.status(HttpStatus.OK).body(transporteService.findAll());
 	}
 	
+	@Operation(description = "Busca transporte pelo Id")
 	@GetMapping("/{id}")
 	public ResponseEntity<Transporte> findById(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(transporteService.findById(id));
 	}
+	
+	@Operation(description = "Gera relatorio de atraso")
 	@GetMapping("/atraso/{id}")
 	public ResponseEntity<String> relatorioAtraso(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(transporteService.relatorioAtraso(id));
 	}
+	
+	@Operation(description = "Busca os modelos de veiculos mais transportados")
 	@GetMapping("/veiculos/mais-transportados")
 	public ResponseEntity<List<Object[]>> maisTransportados(){
 		return ResponseEntity.status(HttpStatus.OK).body(transporteService.findMostUsedCars());
 	}
+	
+	@Operation(description = "Cria um transporte")
 	@PostMapping
 	public ResponseEntity<Transporte> createTransporte(@RequestBody TransporteDto clienteDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(transporteService.createTransporte(clienteDto));
 	}
+	@Operation(description = "Atualiza um transpote")
 	@PutMapping("/{id}")
 	public ResponseEntity<Transporte> updateTransporte(@RequestBody TransporteDto transporteDto, @PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(transporteService.uptadeTransporte(id, transporteDto));
 	}
+	@Operation(description = "Deleta um transporte")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Transporte> deleteTransporte(@PathVariable(name = "id")UUID id){
 		transporteService.deleteTransporte(id);

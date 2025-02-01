@@ -20,6 +20,8 @@ import com.traggio.models.Cliente;
 import com.traggio.services.ClienteService;
 import com.traggio.services.PedidoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
@@ -31,29 +33,39 @@ public class ClienteController {
 	@Autowired
 	PedidoService pedidoService;
 	
+	
+	@Operation(description = "Lista todos os clientes")
 	@GetMapping
 	public ResponseEntity<List<Cliente>> findAll(){
 		return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll());
 	}
 	
+	
+	@Operation(description = "Busca cliente pelo ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> findById(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(clienteService.findById(id));
 	}
 	
+	@Operation(description = "Lista todas as taxas pagas pelo Cliente")
 	@GetMapping("/taxas/{id}")
 	public ResponseEntity<List<Double>> taxasPagas(@PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.taxasPagas(id));
 	}
 	
+	@Operation(description = "Cria um Cliente")
 	@PostMapping
 	public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDto clienteDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.createCliente(clienteDto));
 	}
+	
+	@Operation(description = "Atualiza um Cliente")
 	@PutMapping("/{id}")
 	public ResponseEntity<Cliente> updateCliente(@RequestBody ClienteDto clienteDto, @PathVariable(name = "id")UUID id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.uptadeCliente(id, clienteDto));
 	}
+	
+	@Operation(description = "Deleta um Cliente")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Cliente> deleteCliente(@PathVariable(name = "id")UUID id){
 		clienteService.deleteCliente(id);

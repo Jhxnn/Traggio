@@ -44,6 +44,10 @@ public class PedidoService {
 		return pedidoRepository.save(pedido);
 	}
 	
+	public List<Pedido> findByStatus(StatusPedido status){
+		return pedidoRepository.findByStatus(status);
+	}
+	
 	public List<Double> taxasPagas(UUID clienteId) {
 		var cliente = clienteService.findById(clienteId);
 		return pedidoRepository.findTotalTaxaByClienteId(cliente);
