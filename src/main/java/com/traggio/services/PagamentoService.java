@@ -8,6 +8,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.io.source.ByteArrayOutputStream;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import com.traggio.dtos.PagamentoDto;
 import com.traggio.models.Pagamento;
 import com.traggio.models.enums.MeioPagamento;
@@ -56,8 +61,34 @@ public class PagamentoService {
 		}
 		return total;
 	}
-	
-	
+	public byte[] pdfPagamento(LocalDate dataInicio, LocalDate dataFim) {
+		
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(byteArrayOutputStream);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+		List<Pagamento> pagamentos = findByData(dataInicio, dataFim);
+		for(Pagamento pagamento: pagamentos) {
+			Paragraph idPedidoParagrafo = new Paragraph("Id do pedido: " + pagamento.getPedido().getPedidoId());
+			Paragraph dataPagamentoParagrafo = new Paragraph("Data do pagamento: " + pagamento.getDataPagamento());
+			Paragraph valorParagrafo = new Paragraph("Valor: " + pagamento.getValor());
+			Paragraph meioPagamentoParagrafo = new Paragraph("Meio de pagamento: " + pagamento.getMeioPagamento());
+			Paragraph statusPagamentoParagrafo = new Paragraph("Status: " + pagamento.getStatus());
+			Paragraph paragrafoEspacamento = new Paragraph("_____________________________________________");
+			
+			document.add(idPedidoParagrafo);
+			document.add(dataPagamentoParagrafo);
+			document.add(valorParagrafo);
+			document.add(meioPagamentoParagrafo);
+			document.add(statusPagamentoParagrafo);
+			document.add(paragrafoEspacamento);
+			
+		}
+		Paragraph valorTotal = new Paragraph("Valor Total: "  + receitaDurantePeriodo(dataInicio, dataFim));
+		document.add(valorTotal);
+        document.close();
+        return byteArrayOutputStream.toByteArray();
+	}
 	public Pagamento uptadePagamento(UUID id, PagamentoDto pagamentoDto) {
 		var pagamento =  findById(id);
 		BeanUtils.copyProperties(pagamentoDto, pagamento);
