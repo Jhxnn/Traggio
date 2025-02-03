@@ -63,31 +63,31 @@ public class PagamentoService {
 	}
 	public byte[] pdfPagamento(LocalDate dataInicio, LocalDate dataFim) {
 		
+		try(
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(byteArrayOutputStream);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
+		){
 		List<Pagamento> pagamentos = findByData(dataInicio, dataFim);
+		
 		for(Pagamento pagamento: pagamentos) {
-			Paragraph idPedidoParagrafo = new Paragraph("Id do pedido: " + pagamento.getPedido().getPedidoId());
-			Paragraph dataPagamentoParagrafo = new Paragraph("Data do pagamento: " + pagamento.getDataPagamento());
-			Paragraph valorParagrafo = new Paragraph("Valor: " + pagamento.getValor());
-			Paragraph meioPagamentoParagrafo = new Paragraph("Meio de pagamento: " + pagamento.getMeioPagamento());
-			Paragraph statusPagamentoParagrafo = new Paragraph("Status: " + pagamento.getStatus());
-			Paragraph paragrafoEspacamento = new Paragraph("_____________________________________________");
 			
-			document.add(idPedidoParagrafo);
-			document.add(dataPagamentoParagrafo);
-			document.add(valorParagrafo);
-			document.add(meioPagamentoParagrafo);
-			document.add(statusPagamentoParagrafo);
-			document.add(paragrafoEspacamento);
+			document.add(new Paragraph("Id do pedido: " + pagamento.getPedido().getPedidoId()));
+			document.add(new Paragraph("Data do pagamento: " + pagamento.getDataPagamento()));
+			document.add(new Paragraph("Valor: " + pagamento.getValor()));
+			document.add(new Paragraph("Meio de pagamento: " + pagamento.getMeioPagamento()));
+			document.add(new Paragraph("Status: " + pagamento.getStatus()));
+			document.add(new Paragraph("_____________________________________________"));
 			
 		}
-		Paragraph valorTotal = new Paragraph("Valor Total: "  + receitaDurantePeriodo(dataInicio, dataFim));
-		document.add(valorTotal);
+		document.add(new Paragraph("Valor Total: "  + receitaDurantePeriodo(dataInicio, dataFim)));
         document.close();
         return byteArrayOutputStream.toByteArray();
+		}
+		catch(Exception e) {
+			throw new RuntimeException("Erro ao gerar relatorio: ", e);
+		}
 	}
 	public Pagamento uptadePagamento(UUID id, PagamentoDto pagamentoDto) {
 		var pagamento =  findById(id);

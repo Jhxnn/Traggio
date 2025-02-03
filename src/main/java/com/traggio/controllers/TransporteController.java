@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,8 +44,12 @@ public class TransporteController {
 	
 	@Operation(description = "Gera relatorio de atraso")
 	@GetMapping("/atraso/{id}")
-	public ResponseEntity<String> relatorioAtraso(@PathVariable(name = "id")UUID id){
-		return ResponseEntity.status(HttpStatus.OK).body(transporteService.relatorioAtraso(id));
+	public ResponseEntity<byte[]> relatorioAtraso(@PathVariable(name = "id")UUID id){
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=relatorio.pdf");
+	    headers.add(HttpHeaders.CONTENT_TYPE, "application/pdf");
+	    byte[] pdfBytes = transporteService.relatorioAtraso(id);
+	    return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 	}
 	
 	@Operation(description = "Busca os modelos de veiculos mais transportados")

@@ -51,6 +51,14 @@ public class Transporte {
 		return status;
 	}
 	
+	public UUID getTransporteId() {
+		return transporteId;
+	}
+
+	public void setTransporteId(UUID transporteId) {
+		this.transporteId = transporteId;
+	}
+
 	public void setStatus(StatusTransporte status) {
 		this.status = status;
 	}
