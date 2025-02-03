@@ -7,6 +7,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.io.source.ByteArrayOutputStream;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import com.traggio.dtos.PedidoDto;
 import com.traggio.models.Cliente;
 import com.traggio.models.Pedido;
@@ -22,6 +27,9 @@ public class PedidoService {
 	
 	@Autowired
 	ClienteService clienteService;
+	
+	@Autowired
+	TransporteService transporteService;
 	
 	
 	
@@ -81,5 +89,31 @@ public class PedidoService {
 	public void deletePedido(UUID id) {
 		var pedido = findById(id);
 		pedidoRepository.delete(pedido);
+	}
+	public byte[] orcamentoCompleto(UUID transporteId) {
+		try(
+		        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		        PdfWriter writer = new PdfWriter(byteArrayOutputStream);
+		        PdfDocument pdf = new PdfDocument(writer);
+		        Document document = new Document(pdf);
+				){
+			
+			var transporte = transporteService.findById(transporteId);
+			
+			document.add(new Paragraph("Ola " + transporte.getPedido().getCliente().getNome() +  ", aqui está o seu orçamento"));
+			document.add(new Paragraph("Valor do transporte: " + transporte.getValorTransporte()));
+			document.add(new Paragraph("Valor do veiculo: " + transporte.getVeiculo().getPrecoBase()));
+			document.add(new Paragraph("Taxa de importação do veiculo: " + transporte.getVeiculo().getTaxaImportacao()));
+			document.add(new Paragraph("Total de taxas: " + transporte.getPedido().getTotalTaxa()));
+			document.add(new Paragraph("Valor final: " + transporte.getPedido().getValorFinal()));
+			document.close();
+			
+			return byteArrayOutputStream.toByteArray();
+			
+			
+		}
+		catch(Exception e) {
+			throw new RuntimeException("Erro ao gerar pdf", e);
+		}
 	}
 }

@@ -13,6 +13,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.traggio.dtos.TransporteDto;
+import com.traggio.models.Pedido;
 import com.traggio.models.Transporte;
 import com.traggio.repositories.TransporteRepository;
 
@@ -65,6 +66,10 @@ public class TransporteService {
 	
 	public List<Object[]> findMostUsedCars(){
 		return transporteRepository.findMostUsedVehicleModels();
+	}
+	
+	public Transporte findByPedido(Pedido pedido) {
+		return transporteRepository.findByPedido(pedido);
 	}
 	
 	

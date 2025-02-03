@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -63,6 +64,17 @@ public class PedidoController {
 	@GetMapping("/status/{status}")
 	public ResponseEntity<List<Pedido>> findByStatus(@PathVariable(name = "status")StatusPedido status){
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findByStatus(status));
+	}
+	
+	@Operation(description = "Gera um relatorio em PDF do orçamento")
+	@GetMapping("/orcamento/pdf/{transporteId}")
+	public ResponseEntity<byte[]> orcamentoPdf(@PathVariable(name = "transporteId")UUID transporteId){
+		
+		byte[] pdfBytes = pedidoService.orcamentoCompleto(transporteId);
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=relatorio.pdf");
+	    headers.add(HttpHeaders.CONTENT_TYPE, "application/pdf");
+	    return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 	}
 	
 	@Operation(description = "Cria um pedido")

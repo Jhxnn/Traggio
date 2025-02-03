@@ -38,6 +38,8 @@ public class Transporte {
    
    private int numeroContainer;
    
+   private double valorTransporte;
+   
    private LocalDate dataEmbarque;
    
    private LocalDate dataPrevisaoChegada;
@@ -111,6 +113,14 @@ public class Transporte {
 		this.dataPrevisaoChegada = dataPrevisaoChegada;
 	}
 	
+	public double getValorTransporte() {
+		return valorTransporte;
+	}
+
+	public void setValorTransporte(double valorTransporte) {
+		this.valorTransporte = valorTransporte;
+	}
+
 	public LocalDate getDataChegada() {
 		return dataChegada;
 	}
