@@ -15,6 +15,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.traggio.dtos.TransporteDto;
 import com.traggio.models.Pedido;
 import com.traggio.models.Transporte;
+import com.traggio.repositories.PedidoRepository;
 import com.traggio.repositories.TransporteRepository;
 
 
@@ -23,6 +24,9 @@ public class TransporteService {
 
 	@Autowired
 	TransporteRepository transporteRepository;
+	
+	@Autowired
+	PedidoRepository pedidoRepository;
 	
 	
 	
@@ -37,6 +41,10 @@ public class TransporteService {
 	public Transporte createTransporte(TransporteDto transporteDto) {
 		var transporte = new Transporte();
 		BeanUtils.copyProperties(transporteDto, transporte);
+		var pedido  = transporte.getPedido();
+		pedido.setTotalTaxa(transporte.getVeiculo().getTaxaImportacao());
+		pedido.setValorFinal(transporte.getValorTransporte() + transporte.getVeiculo().getPrecoBase());
+		pedidoRepository.save(pedido);
 		return transporteRepository.save(transporte);
 	}
 	

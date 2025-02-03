@@ -8,9 +8,7 @@ import com.traggio.models.enums.StatusPedido;
 public record PedidoDto(
 		UUID clienteId,
 		LocalDate dataPedido,
-		StatusPedido status,
-		double totalTaxa,
-		double valorFinal, 
+		StatusPedido status, 
 		String observacao	
 		) {
 

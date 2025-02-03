@@ -58,7 +58,7 @@ public class TransporteController {
 		return ResponseEntity.status(HttpStatus.OK).body(transporteService.findMostUsedCars());
 	}
 	
-	@Operation(description = "Cria um transporte")
+	@Operation(description = "Cria um transporte e salva valor total e total de taxa no Pedido")
 	@PostMapping
 	public ResponseEntity<Transporte> createTransporte(@RequestBody TransporteDto clienteDto){
 		return ResponseEntity.status(HttpStatus.CREATED).body(transporteService.createTransporte(clienteDto));

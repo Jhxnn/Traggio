@@ -10,6 +10,7 @@ public record TransporteDto(
 		UUID despachanteId,
 		UUID pedidoId,
 		int numeroContainer,
+		double valorTransporte,
 		LocalDate dataEmbarque,
 		LocalDate dataPrevisaoChegada,
 		LocalDate dataChegada,
