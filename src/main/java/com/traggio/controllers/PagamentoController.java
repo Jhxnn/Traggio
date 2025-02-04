@@ -85,6 +85,13 @@ public class PagamentoController {
 	    return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 	}
 	
+	@Operation(description = "Envia um email ao usuario caso o pagamento estiver pendente")
+	@GetMapping("/pendente/{id}")
+	public ResponseEntity<String> notificacaoPagament(@PathVariable(name = "id")UUID id){
+		return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.notificaoPagamento(id));
+	}
+	
+	
 	@Operation(description = "Cria um pagamento")
 	@PostMapping
 	public ResponseEntity<Pagamento> createPagamento(@RequestBody PagamentoDto pagamentoDto){
