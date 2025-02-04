@@ -19,6 +19,9 @@ public class ClienteService {
 	ClienteRepository clienteRepository;
 	
 	
+	@Autowired
+	EmailService emailService;
+	
 	
 	public Cliente findById(UUID id) {
 		return clienteRepository.findById(id).orElseThrow(()-> new RuntimeException("Não foi possivel encontrar"));
@@ -31,6 +34,7 @@ public class ClienteService {
 	public Cliente createCliente(ClienteDto clienteDto) {
 		var cliente = new Cliente();
 		BeanUtils.copyProperties(clienteDto, cliente);
+		emailService.enviarEmailTexto(cliente.getEmail(), "Nova Conta", "Sua conta foi criada com sucesso. Bem vindo ao Traggio " + cliente.getNome());
 		return clienteRepository.save(cliente);
 	}
 	
