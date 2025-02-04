@@ -31,6 +31,9 @@ public class PedidoService {
 	@Autowired
 	TransporteService transporteService;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	
 	
 	public Pedido findById(UUID id) {
@@ -48,6 +51,9 @@ public class PedidoService {
 	
 	public Pedido uptadeStatus(StatusPedido status, UUID idPedido) {
 		Pedido pedido = findById(idPedido);
+		emailService.enviarEmailTexto(pedido.getCliente().getEmail(), "Status do pedido atualizado - TRAGGIO", "Olá " 
+		+ pedido.getCliente().getNome() + 
+		" O status do seu pedido foi atualizado de " + pedido.getStatus() + " para " + status);
 		pedido.setStatus(status);
 		return pedidoRepository.save(pedido);
 	}

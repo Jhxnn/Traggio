@@ -28,6 +28,9 @@ public class TransporteService {
 	@Autowired
 	PedidoRepository pedidoRepository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	
 	
 	public Transporte findById(UUID id) {
@@ -64,7 +67,12 @@ public class TransporteService {
 	        document.add(new Paragraph("Data de embarque: " + transporte.getDataEmbarque()));
 	        document.add(new Paragraph("Data de previsão da chegada: " + transporte.getDataPrevisaoChegada()));
 	        document.add(new Paragraph("Data de chegada: " + transporte.getDataChegada()));
-
+	        
+	        emailService.enviarEmailTexto(transporte.getPedido().getCliente().getEmail(),
+	        		"Atraso do transporte - TRAGGIO",
+	        		"Olá " + transporte.getPedido().getCliente().getNome() + ", este email esta sendo enviado para notificar que o transporte " +
+	        		transporte.getTransporteId() + " atrasou.\n Data prevista: " + transporte.getDataPrevisaoChegada() + "\n Data de chegada: " +
+	        				transporte.getDataChegada());
 	        return byteArrayOutputStream.toByteArray();
 	    } catch (Exception e) {
 	        throw new RuntimeException("Erro ao gerar o relatório de atraso", e);

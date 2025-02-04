@@ -56,7 +56,6 @@ public class ClienteController {
 	@Operation(description = "Cria um Cliente")
 	@PostMapping
 	public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDto clienteDto){
-		System.out.println("Cliente enviado");
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.createCliente(clienteDto));
 	}
 	

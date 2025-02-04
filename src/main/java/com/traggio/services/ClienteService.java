@@ -34,7 +34,7 @@ public class ClienteService {
 	public Cliente createCliente(ClienteDto clienteDto) {
 		var cliente = new Cliente();
 		BeanUtils.copyProperties(clienteDto, cliente);
-		emailService.enviarEmailTexto(cliente.getEmail(), "Nova Conta", "Sua conta foi criada com sucesso. Bem vindo ao Traggio " + cliente.getNome());
+		emailService.enviarEmailTexto(cliente.getEmail(), "Conta Criada - TRAGGIO", "Sua conta foi criada com sucesso. \nBem vindo ao Traggio " + cliente.getNome() + ". \nChave de de verificação: *443*. \nQualquer duvida contate nosso suporte ");
 		return clienteRepository.save(cliente);
 	}
 	

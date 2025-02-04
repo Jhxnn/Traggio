@@ -25,6 +25,9 @@ public class PagamentoService {
 	@Autowired
 	PagamentoRepository pagamentoRepository;
 	
+	@Autowired
+	EmailService emailService;
+	
 	
 	
 	public Pagamento findById(UUID id) {
@@ -47,6 +50,18 @@ public class PagamentoService {
 	
 	public List<Pagamento> findByStatus(StatusPagamento status){
 		return pagamentoRepository.findByStatus(status);
+	}
+	public String notificaoPagamento(UUID pagamentoId) {
+		var pagamento = findById(pagamentoId);
+		if(pagamento.getStatus().equals(StatusPagamento.PENDENTE)) {
+			return emailService.enviarEmailTexto(pagamento.getPedido().getCliente().getEmail(),
+					"Pagamento pendendo - TRAGGIO",
+					"Olá " + pagamento.getPedido().getCliente().getNome() + 
+					", este email esta sendo enviado, para informar que o pedido"
+							+ pagamento.getPedido().getPedidoId() + 
+							"está com o pagamento pendente");
+		}
+		return "O pagamento não está pendente";
 	}
 	
 	public List<Pagamento> findByData(LocalDate dataInicio, LocalDate dataFim){

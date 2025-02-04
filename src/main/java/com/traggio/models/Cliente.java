@@ -25,7 +25,7 @@ public class Cliente {
 	
 	private String senha;
 	
-	private int cpf;
+	private String cpf;
 	
 	private LocalDate dataCadastro;
 
@@ -61,11 +61,11 @@ public class Cliente {
 		this.senha = senha;
 	}
 
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

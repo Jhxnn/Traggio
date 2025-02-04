@@ -6,7 +6,7 @@ public record ClienteDto(
 		String nome,
 		String email,
 		String senha,
-		int cpf,
+		String cpf,
 		LocalDate dataCadastro
 		) {
 
