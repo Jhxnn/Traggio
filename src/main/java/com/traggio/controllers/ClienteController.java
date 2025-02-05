@@ -53,11 +53,7 @@ public class ClienteController {
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.taxasPagas(id));
 	}
 	
-	@Operation(description = "Cria um Cliente")
-	@PostMapping
-	public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDto clienteDto){
-		return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.createCliente(clienteDto));
-	}
+	
 	
 	@Operation(description = "Atualiza um Cliente")
 	@PutMapping("/{id}")

@@ -1,7 +1,15 @@
 package com.traggio.models;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.traggio.models.enums.Roles;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "clientes")
-public class Cliente {
+public class Cliente implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +29,7 @@ public class Cliente {
 	
 	private String nome;
 	
+	@Column(unique = true)
 	private String email;
 	
 	private String senha;
@@ -28,10 +37,18 @@ public class Cliente {
 	private String cpf;
 	
 	private LocalDate dataCadastro;
+	
+	private Roles role;
+	
+	
+	
 
 	public UUID getClienteId() {
 		return clienteId;
 	}
+	
+
+	
 
 	public void setClienteId(UUID clienteId) {
 		this.clienteId = clienteId;
@@ -75,6 +92,47 @@ public class Cliente {
 
 	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+
+
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if(this.role == Roles.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+		else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+
+
+
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return senha;
+	}
+
+
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
+	}
+
+
+
+
+	public Roles getRole() {
+		return role;
+	}
+
+
+
+
+	public void setRole(Roles role) {
+		this.role = role;
 	}
 	
 	
