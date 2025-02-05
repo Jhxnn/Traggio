@@ -1,4 +1,4 @@
-package com.traggio.infra.security;
+ package com.traggio.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class SecurityConfiguration {
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-						.requestMatchers(HttpMethod.POST, "/cliente").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.POST).hasRole("ADMIN")
 						.anyRequest().authenticated()
 						 )
 				.build();
