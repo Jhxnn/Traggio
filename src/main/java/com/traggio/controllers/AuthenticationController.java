@@ -26,7 +26,7 @@ import jakarta.validation.Valid;
 public class AuthenticationController {
 
 	@Autowired
-	EmailService emailService;
+	EmailService emailService;	
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -44,7 +44,7 @@ public class AuthenticationController {
 	
 	@Operation(description = "Registra um usuario")
 	@PostMapping("/register")
-	public ResponseEntity register(@PathVariable @Valid  ClienteDto clienteDto) {
+	public ResponseEntity register(@RequestBody @Valid  ClienteDto clienteDto) {
 		
 		if(clienteRepository.findByEmail(clienteDto.email()) != null) return ResponseEntity.badRequest().build();
 		
