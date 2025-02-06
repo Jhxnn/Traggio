@@ -50,7 +50,7 @@ public class AuthenticationController {
 	@PostMapping("/register")
 	public ResponseEntity register(@RequestBody @Valid  ClienteDto clienteDto) {
 		
-		if(clienteRepository.findByEmail(clienteDto.email()) != null) return ResponseEntity.badRequest().build();
+		if(clienteRepository.findByEmail(clienteDto.email()) != null) return ResponseEntity.badRequest().body("Email já usado!");
 		
 		String encryptedPass = new BCryptPasswordEncoder().encode(clienteDto.senha());
 		var cliente = new Cliente();
@@ -58,7 +58,7 @@ public class AuthenticationController {
 		cliente.setSenha(encryptedPass);
 		emailService.enviarEmailTexto(cliente.getEmail(), "Conta Criada - TRAGGIO", "Sua conta foi criada com sucesso. \nBem vindo ao Traggio, " + cliente.getNome() + ". \nChave de de verificação: 443. \nQualquer duvida contate nosso suporte! ");
 		clienteRepository.save(cliente);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body("Conta criada! \nemail: " + cliente.getEmail());
 		
 	}
 }
