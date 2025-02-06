@@ -72,8 +72,8 @@ public class TransporteService {
 	
 	public byte[] relatorioAtraso(UUID id) {
 	    var transporte = findById(id);
-	    if (!transporte.getDataPrevisaoChegada().isBefore(transporte.getDataChegada())) {
-	        throw new IllegalArgumentException("O transporte não atrasou");
+	    if (!transporte.getDataChegada().isAfter(transporte.getDataPrevisaoChegada())) {
+	       return null;
 	    }
 
 	    try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -92,6 +92,8 @@ public class TransporteService {
 	        		"Olá " + transporte.getPedido().getCliente().getNome() + ", este email esta sendo enviado para notificar que o transporte " +
 	        		transporte.getTransporteId() + " atrasou.\n Data prevista: " + transporte.getDataPrevisaoChegada() + "\n Data de chegada: " +
 	        				transporte.getDataChegada());
+	        
+	        document.close();
 	        return byteArrayOutputStream.toByteArray();
 	    } catch (Exception e) {
 	        throw new RuntimeException("Erro ao gerar o relatório de atraso", e);

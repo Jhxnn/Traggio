@@ -60,21 +60,21 @@ public class PagamentoController {
 	
 	
 	@Operation(description = "Lista todos os pagamentos pela data inicial e data final")
-	@GetMapping("/data/{dataInico}/{dataFim}")
+	@GetMapping("/data/{dataInicio}/{dataFim}")
 	public ResponseEntity<List<Pagamento>> findBydata(@PathVariable(name = "dataInicio")LocalDate dataInicio,
 			@PathVariable(name = "dataFim")LocalDate dataFim){
 		return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.findByData(dataInicio, dataFim));
 	}
 	
 	@Operation(description = "Retorna receita total de uma data incial ate uma data final")
-	@GetMapping("/receita/{dataInico}/{dataFim}")
+	@GetMapping("/receita/{dataInicio}/{dataFim}")
 	public ResponseEntity<Double> receitaPeriodo(@PathVariable(name = "dataInicio")LocalDate dataInicio,
 			@PathVariable(name = "dataFim")LocalDate dataFim){
 		return ResponseEntity.status(HttpStatus.OK).body(pagamentoService.receitaDurantePeriodo(dataInicio, dataFim));
 	}
 	
 	@Operation(description = "Gera um relatorio em PDF com os pagamentos e a receita total")
-	@GetMapping("/pdf/{dataInico}/{dataFim}")
+	@GetMapping("/pdf/{dataInicio}/{dataFim}")
 	public ResponseEntity<byte[]> pdfPagamento(@PathVariable(name = "dataInicio")LocalDate dataInicio,
 			@PathVariable(name = "dataFim")LocalDate dataFim){
 		

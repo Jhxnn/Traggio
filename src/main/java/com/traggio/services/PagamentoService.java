@@ -60,11 +60,11 @@ public class PagamentoService {
 		var pagamento = findById(pagamentoId);
 		if(pagamento.getStatus().equals(StatusPagamento.PENDENTE)) {
 			return emailService.enviarEmailTexto(pagamento.getPedido().getCliente().getEmail(),
-					"Pagamento pendendo - TRAGGIO",
+					"Pagamento pendente - TRAGGIO",
 					"Olá " + pagamento.getPedido().getCliente().getNome() + 
-					", este email esta sendo enviado, para informar que o pedido"
+					", este email esta sendo enviado, para informar que o pedido "
 							+ pagamento.getPedido().getPedidoId() + 
-							"está com o pagamento pendente");
+							" está com o pagamento pendente");
 		}
 		return "O pagamento não está pendente";
 	}
