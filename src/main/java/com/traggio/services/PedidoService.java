@@ -82,13 +82,17 @@ public class PedidoService {
 	
 	public Pedido createPedido(PedidoDto pedidoDto) {
 		var pedido = new Pedido();
+		var cliente = clienteService.findById(pedidoDto.clienteId());
 		BeanUtils.copyProperties(pedidoDto, pedido);
+		pedido.setCliente(cliente);
 		return pedidoRepository.save(pedido);
 	}
 	
 	public Pedido uptadePedido(UUID id, PedidoDto pedidoDto) {
 		var pedido =  findById(id);
+		var cliente = clienteService.findById(pedidoDto.clienteId());
 		BeanUtils.copyProperties(pedidoDto, pedido);
+		pedido.setCliente(cliente);
 		return pedidoRepository.save(pedido);
 	}
 	

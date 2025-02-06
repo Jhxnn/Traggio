@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.io.source.ByteArrayOutputStream;
@@ -25,8 +26,18 @@ public class TransporteService {
 	@Autowired
 	TransporteRepository transporteRepository;
 	
+	@Lazy
+	@Autowired
+	PedidoService pedidoService;
+	
 	@Autowired
 	PedidoRepository pedidoRepository;
+	
+	@Autowired
+	VeiculoService veiculoService;
+	
+	@Autowired
+	DespachanteService despachanteService;
 	
 	@Autowired
 	private EmailService emailService;
@@ -44,9 +55,17 @@ public class TransporteService {
 	public Transporte createTransporte(TransporteDto transporteDto) {
 		var transporte = new Transporte();
 		BeanUtils.copyProperties(transporteDto, transporte);
-		var pedido  = transporte.getPedido();
+		
+		var pedido  = pedidoService.findById(transporteDto.pedidoId());
+		var veiculo = veiculoService.findById(transporteDto.veiculoId());
+		var despachante = despachanteService.findById(transporteDto.despachanteId());
+		transporte.setVeiculo(veiculo);
+		transporte.setPedido(pedido);
+		transporte.setDespachante(despachante);
 		pedido.setTotalTaxa(transporte.getVeiculo().getTaxaImportacao());
 		pedido.setValorFinal(transporte.getValorTransporte() + transporte.getVeiculo().getPrecoBase());
+		
+		
 		pedidoRepository.save(pedido);
 		return transporteRepository.save(transporte);
 	}
@@ -93,6 +112,12 @@ public class TransporteService {
 	public Transporte uptadeTransporte(UUID id, TransporteDto transporteDto) {
 		var transporte =  findById(id);
 		BeanUtils.copyProperties(transporteDto, transporte);
+		var pedido  = pedidoService.findById(transporteDto.pedidoId());
+		var veiculo = veiculoService.findById(transporteDto.veiculoId());
+		var despachante = despachanteService.findById(transporteDto.despachanteId());
+		transporte.setVeiculo(veiculo);
+		transporte.setPedido(pedido);
+		transporte.setDespachante(despachante);
 		return transporteRepository.save(transporte);
 	}
 	

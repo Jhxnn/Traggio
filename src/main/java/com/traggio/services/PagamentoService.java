@@ -28,6 +28,9 @@ public class PagamentoService {
 	@Autowired
 	EmailService emailService;
 	
+	@Autowired
+	PedidoService pedidoService;
+	
 	
 	
 	public Pagamento findById(UUID id) {
@@ -40,7 +43,9 @@ public class PagamentoService {
 	
 	public Pagamento createPagamento(PagamentoDto pagamentoDto) {
 		var pagamento = new Pagamento();
+		var pedido = pedidoService.findById(pagamentoDto.pedidoId());
 		BeanUtils.copyProperties(pagamentoDto, pagamento);
+		pagamento.setPedido(pedido);
 		return pagamentoRepository.save(pagamento);
 	}
 	
@@ -106,7 +111,9 @@ public class PagamentoService {
 	}
 	public Pagamento uptadePagamento(UUID id, PagamentoDto pagamentoDto) {
 		var pagamento =  findById(id);
+		var pedido = pedidoService.findById(pagamentoDto.pedidoId());
 		BeanUtils.copyProperties(pagamentoDto, pagamento);
+		pagamento.setPedido(pedido);
 		return pagamentoRepository.save(pagamento);
 	}
 	
