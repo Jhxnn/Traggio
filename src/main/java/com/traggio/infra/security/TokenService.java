@@ -46,7 +46,6 @@ public class TokenService {
 					.getSubject();
 		}
 		catch(JWTVerificationException e) {
-			
 			return ""; 
 		}
 	}
