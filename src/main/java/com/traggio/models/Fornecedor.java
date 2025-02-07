@@ -22,7 +22,7 @@ public class Fornecedor {
 	
 	private String contato;
 	
-	private String endereço;
+	private String endereco;
 	
 	private String pais;
 	
@@ -52,12 +52,12 @@ public class Fornecedor {
 		this.contato = contato;
 	}
 
-	public String getEndereço() {
-		return endereço;
+	public String getEndereco() {
+		return endereco;
 	}
 
-	public void setEndereço(String endereço) {
-		this.endereço = endereço;
+	public void setEndereço(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public String getPais() {
