@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgress
+      POSTGRES_PASSWORD: brenda2802
+      POSTGRES_DB: traggio
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: my_spring_app
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/traggio
+      SPRING_DATASOURCE_USERNAME: postgress
+      SPRING_DATASOURCE_PASSWORD: brenda2802
+    ports:
+      - "8080:8080"
